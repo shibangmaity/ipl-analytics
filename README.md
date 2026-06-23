@@ -11,16 +11,16 @@ An end-to-end **Data Analytics + Machine Learning** project analyzing **1,090 IP
 ## 📸 Screenshots
 
 ### Predict Match
-![Predict](images/home.png)
+![Predict](home.png)
 
 ### Player Stats
-![Player Stats](images/player.png)
+![Player Stats](player.png)
 
 ### Analytics Charts
-![Analytics](images/analytics.png)
+![Analytics](analytics.png)
 
 ### Head to Head
-![H2H](images/h2h.png)
+![H2H](h2h.png)
 
 ---
 
