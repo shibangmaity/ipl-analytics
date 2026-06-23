@@ -157,11 +157,11 @@ with st.sidebar:
 # ── Load & Train ─────────────────────────────────────────────────────────────────
 @st.cache_resource
 def load_and_train():
-MATCHES_URL = "https://huggingface.co/datasets/shibangmaity/ipl-analytics-data/resolve/main/matches.csv"
-DELIVERIES_URL = "https://huggingface.co/datasets/shibangmaity/ipl-analytics-data/resolve/main/deliveries.csv"
-    
-matches = pd.read_csv(MATCHES_URL)
-deliveries = pd.read_csv(DELIVERIES_URL)
+    MATCHES_URL = "https://huggingface.co/datasets/shibangmaity/ipl-analytics-data/resolve/main/matches.csv"
+    DELIVERIES_URL = "https://huggingface.co/datasets/shibangmaity/ipl-analytics-data/resolve/main/deliveries.csv"
+
+    matches = pd.read_csv(MATCHES_URL)
+    deliveries = pd.read_csv(DELIVERIES_URL)
 
     sm={'2007/08':'2008','2009/10':'2010','2020/21':'2021'}
     tm={'Rising Pune Supergiant':'Rising Pune Supergiants','Royal Challengers Bangalore':'Royal Challengers Bengaluru','Delhi Daredevils':'Delhi Capitals','Kings XI Punjab':'Punjab Kings'}
