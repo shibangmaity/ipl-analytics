@@ -484,6 +484,8 @@ if st.session_state.page=='predict':
               </filter>
             </defs>
             <!-- boundary arc -->
+            <ellipse cx="30" cy="98" rx="28" ry="8" fill="none" stroke="#2a5a2a" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.6"/>
+            <!-- pitch strip -->
             <rect x="22" y="62" width="16" height="36" rx="2" fill="#8a6a1a" opacity="0.18"/>
             <!-- VS text -->
             <text x="30" y="50" text-anchor="middle" font-family="Arial Black" font-size="30" font-weight="900" fill="#ffffff" opacity="1" letter-spacing="3">VS</text>
