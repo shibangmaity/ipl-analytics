@@ -490,8 +490,6 @@ if st.session_state.page=='predict':
             <!-- stump 1 -->
             <rect x="14" y="35" width="5" height="56" rx="2" fill="url(#sg)" filter="url(#glow)"/>
             <!-- stump 2 -->
-            <rect x="27.5" y="35" width="5" height="56" rx="2" fill="url(#sg)" filter="url(#glow)"/>
-            <!-- stump 3 -->
             <rect x="41" y="35" width="5" height="56" rx="2" fill="url(#sg)" filter="url(#glow)"/>
             <!-- bail 1 -->
             <rect x="12" y="33" width="16" height="5" rx="2.5" fill="url(#sg)" filter="url(#glow)"/>
