@@ -1180,7 +1180,7 @@ elif st.session_state.page=='about':
     <div class="card"><div class="divider">👤 BUILT BY</div>
         <div style="color:#ccd;font-size:13px;line-height:2.2">
             <b style="color:#fff;font-size:15px">Shibang Maity</b><br>
-            Computer Science, KIIT University · Final Year · 2026–2027<br>
+            Computer Science, KIIT University<br>
             <span style="color:#607080">📎 github.com/shibangmaity</span><br>
             <span style="color:#607080">💼 linkedin.com/in/shibang-maity-865ba4304</span>
         </div></div>""",unsafe_allow_html=True)
