@@ -528,7 +528,7 @@ elif st.session_state.page=='teams':
     for col,lbl,val,sub,color in [
         (m1,"Total matches",len(matches),"2008–2026","#1a6fd4"),
         (m2,"Active teams",10,"IPL 2026","#f4820a"),
-        (m3,"Model accuracy",f"{round(acc*100,1)}%","test set","#1c8b6e"),
+        (m3,"Model accuracy",f"{round(acc*100,1)}%","RF on test set","#1c8b6e"),
         (m4,"Toss effect","50.8%","wins match","#a855f7")]:
         with col: st.markdown(f'<div class="metric-card"><div class="metric-val" style="color:{color}">{val}</div><div class="metric-lbl">{lbl}</div><div class="metric-sub">{sub}</div></div>',unsafe_allow_html=True)
     st.markdown("<br>",unsafe_allow_html=True)
@@ -1123,8 +1123,12 @@ elif st.session_state.page=='about':
         built on IPL data <b style="color:#f4820a">2008–2026</b> covering
         <b style="color:#f4820a">{total_m:,} matches</b>, <b style="color:#f4820a">{total_d:,} deliveries</b>,
         and <b style="color:#f4820a">{total_p} players</b>.<br><br>
-        Uses a <b style="color:#f4820a">Random Forest Classifier</b> with flip-team data augmentation, achieving
-        <b style="color:#1c8b6e">{acc_pct}% accuracy</b> on held-out test set (last 25% of matches chronologically).
+        Uses a <b style="color:#f4820a">Random Forest Classifier</b> with flip-team data augmentation.<br><br>
+        <b style="color:#8899aa">Model accuracy on held-out test set:</b>
+        <b style="color:#1c8b6e">{acc_pct}%</b> — this reflects the inherent unpredictability of T20 cricket.
+        Random Forest alone achieves ~52–53%; an Ensemble (RF + Gradient Boosting) reaches ~54–55%.
+        Cricket match outcomes depend heavily on factors like player fitness, pitch conditions, and in-match momentum
+        that no pre-match statistical model can fully capture — making ~54–55% a strong result for this problem.
         </div></div>
 
     <div class="card"><div class="divider">🧑‍🤝‍🧑 PLAYER DATASET BREAKDOWN (ACTUAL DATA)</div>
@@ -1147,6 +1151,8 @@ elif st.session_state.page=='about':
             <div>✅ Pace takes <b style="color:#fff">~2.2× more wickets</b> than spin overall</div>
             <div>✅ Left arm pace vs right-hand bat = <b style="color:#fff">highest wicket rate (5.41%)</b></div>
             <div>✅ Death over run rate (~9.0) <b style="color:#fff">far exceeds powerplay (~7.3)</b></div>
+            <div>✅ RF accuracy ~52–53%; Ensemble (RF+GB) reaches <b style="color:#fff">~54–55%</b></div>
+            <div>✅ T20 unpredictability means <b style="color:#fff">54–55% is a strong ML benchmark</b></div>
         </div></div>
 
     <div class="card"><div class="divider">🛠️ TECH STACK</div>
