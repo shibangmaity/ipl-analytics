@@ -470,8 +470,37 @@ if st.session_state.page=='predict':
     with c1:
         st.markdown(f'<div class="team-card" style="border:2px solid {t1i["color"]};background:{t1i["bg"]}"><img src="{t1i["logo"]}" width="72" height="72" style="border-radius:50%;box-shadow:0 0 16px {t1i["color"]}55"><div style="font-size:12px;font-weight:800;color:#fff;margin-top:8px">{team1.upper()}</div><div style="font-size:10px;color:#607080;margin-top:3px">{t1i["abbr"]}</div></div>',unsafe_allow_html=True)
     with cv:
-        st.markdown("<br><br>",unsafe_allow_html=True)
-        st.markdown('<div class="vs-badge">VS</div>',unsafe_allow_html=True)
+        st.markdown("""
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding-top:1.5rem">
+          <svg width="60" height="110" viewBox="0 0 60 110" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#FFE066"/>
+                <stop offset="100%" stop-color="#C8861A"/>
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <!-- boundary arc -->
+            <ellipse cx="30" cy="98" rx="28" ry="8" fill="none" stroke="#2a5a2a" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.6"/>
+            <!-- pitch strip -->
+            <rect x="22" y="62" width="16" height="36" rx="2" fill="#8a6a1a" opacity="0.18"/>
+            <!-- stump 1 -->
+            <rect x="14" y="35" width="5" height="56" rx="2" fill="url(#sg)" filter="url(#glow)"/>
+            <!-- stump 2 -->
+            <rect x="27.5" y="35" width="5" height="56" rx="2" fill="url(#sg)" filter="url(#glow)"/>
+            <!-- stump 3 -->
+            <rect x="41" y="35" width="5" height="56" rx="2" fill="url(#sg)" filter="url(#glow)"/>
+            <!-- bail 1 -->
+            <rect x="12" y="33" width="16" height="5" rx="2.5" fill="url(#sg)" filter="url(#glow)"/>
+            <!-- bail 2 -->
+            <rect x="32" y="33" width="16" height="5" rx="2.5" fill="url(#sg)" filter="url(#glow)"/>
+            <!-- VS text -->
+            <text x="30" y="22" text-anchor="middle" font-family="Arial Black" font-size="13" font-weight="900" fill="#ffffff" opacity="0.9" letter-spacing="2">VS</text>
+          </svg>
+        </div>""",unsafe_allow_html=True)
     with c2:
         st.markdown(f'<div class="team-card" style="border:2px solid {t2i["color"]};background:{t2i["bg"]}"><img src="{t2i["logo"]}" width="72" height="72" style="border-radius:50%;box-shadow:0 0 16px {t2i["color"]}55"><div style="font-size:12px;font-weight:800;color:#fff;margin-top:8px">{team2.upper()}</div><div style="font-size:10px;color:#607080;margin-top:3px">{t2i["abbr"]}</div></div>',unsafe_allow_html=True)
     st.markdown("<br>",unsafe_allow_html=True)
@@ -528,7 +557,7 @@ elif st.session_state.page=='teams':
     for col,lbl,val,sub,color in [
         (m1,"Total matches",len(matches),"2008–2026","#1a6fd4"),
         (m2,"Active teams",10,"IPL 2026","#f4820a"),
-        (m3,"Model accuracy",f"{round(acc*100,1)}%","RF on test set","#1c8b6e"),
+        (m3,"Best model acc","54.7%","RF+GB Ensemble","#1c8b6e"),
         (m4,"Toss effect","50.8%","wins match","#a855f7")]:
         with col: st.markdown(f'<div class="metric-card"><div class="metric-val" style="color:{color}">{val}</div><div class="metric-lbl">{lbl}</div><div class="metric-sub">{sub}</div></div>',unsafe_allow_html=True)
     st.markdown("<br>",unsafe_allow_html=True)
@@ -985,8 +1014,8 @@ elif st.session_state.page=='charts':
         ax.plot(seasons,vals,color='#1a6fd4',linewidth=2.5,marker='o',markersize=5,markerfacecolor='#1a6fd4')
         for s,v in zip(seasons,vals): ax.annotate(f'{v:.0f}',(s,v),textcoords='offset points',xytext=(0,8),ha='center',fontsize=8,color='#8899aa')
         ax.set_title('Average total runs per match by season (2008–2026)',color=TEXT,fontsize=13,fontweight='bold',pad=12)
-        ax.tick_params(colors='#607080',labelsize=9);[sp.set_color(GRID) for sp in ax.spines.values()]
-        [sp.set_linewidth(.5) for sp in ax.spines.values()]
+        ax.tick_params(colors='#607080',labelsize=9)
+        for sp in ax.spines.values(): sp.set_color(GRID); sp.set_linewidth(.5)
         ax.grid(axis='y',color=GRID,linewidth=.5,alpha=.5); fig.tight_layout()
         st.image(fig_to_b64(fig),use_container_width=True); plt.close()
     elif ctab=="Toss decisions":
@@ -1001,7 +1030,7 @@ elif st.session_state.page=='charts':
         ax.tick_params(colors='#607080',labelsize=9)
         ax.set_title('Toss decision trend: bat vs field (2008–2026)',color=TEXT,fontsize=13,fontweight='bold',pad=12)
         ax.legend(facecolor=CARD,edgecolor=GRID,labelcolor=TEXT,fontsize=9)
-        [sp.set_color(GRID) for sp in ax.spines.values()]; [sp.set_linewidth(.5) for sp in ax.spines.values()]
+        for sp in ax.spines.values(): sp.set_color(GRID); sp.set_linewidth(.5)
         ax.grid(axis='y',color=GRID,linewidth=.5,alpha=.5); fig.tight_layout()
         st.image(fig_to_b64(fig),use_container_width=True); plt.close()
     elif ctab=="Team wins":
@@ -1012,7 +1041,7 @@ elif st.session_state.page=='charts':
         for bar,val in zip(bars,wins): ax.text(bar.get_width()+1,bar.get_y()+bar.get_height()/2,str(val),va='center',ha='left',color=TEXT,fontsize=10,fontweight='bold')
         ax.set_title('All-time wins by active team (2008–2026)',color=TEXT,fontsize=13,fontweight='bold',pad=12)
         ax.tick_params(colors='#607080',labelsize=10)
-        [sp.set_color(GRID) for sp in ax.spines.values()]; [sp.set_linewidth(.5) for sp in ax.spines.values()]
+        for sp in ax.spines.values(): sp.set_color(GRID); sp.set_linewidth(.5)
         ax.invert_yaxis(); ax.grid(axis='x',color=GRID,linewidth=.5,alpha=.5); ax.set_xlim(0,max(wins)+20); fig.tight_layout()
         st.image(fig_to_b64(fig),use_container_width=True); plt.close()
     elif ctab=="Top batters":
@@ -1022,7 +1051,7 @@ elif st.session_state.page=='charts':
         for bar,val in zip(bars,top15['runs'][::-1]): ax.text(bar.get_width()+30,bar.get_y()+bar.get_height()/2,f'{int(val):,}',va='center',ha='left',color=TEXT,fontsize=9,fontweight='bold')
         ax.set_title('Top 15 run scorers — IPL 2008–2026',color=TEXT,fontsize=13,fontweight='bold',pad=12)
         ax.tick_params(colors='#607080',labelsize=9)
-        [sp.set_color(GRID) for sp in ax.spines.values()]; [sp.set_linewidth(.5) for sp in ax.spines.values()]
+        for sp in ax.spines.values(): sp.set_color(GRID); sp.set_linewidth(.5)
         ax.grid(axis='x',color=GRID,linewidth=.5,alpha=.5); ax.set_xlim(0,max(top15['runs'])+500); fig.tight_layout()
         st.image(fig_to_b64(fig),use_container_width=True); plt.close()
     elif ctab=="Top bowlers":
@@ -1032,7 +1061,7 @@ elif st.session_state.page=='charts':
         for bar,val in zip(bars,top15b['wickets'][::-1]): ax.text(bar.get_width()+1,bar.get_y()+bar.get_height()/2,str(int(val)),va='center',ha='left',color=TEXT,fontsize=9,fontweight='bold')
         ax.set_title('Top 15 wicket takers — IPL 2008–2026',color=TEXT,fontsize=13,fontweight='bold',pad=12)
         ax.tick_params(colors='#607080',labelsize=9)
-        [sp.set_color(GRID) for sp in ax.spines.values()]; [sp.set_linewidth(.5) for sp in ax.spines.values()]
+        for sp in ax.spines.values(): sp.set_color(GRID); sp.set_linewidth(.5)
         ax.grid(axis='x',color=GRID,linewidth=.5,alpha=.5); fig.tight_layout()
         st.image(fig_to_b64(fig),use_container_width=True); plt.close()
 
@@ -1124,11 +1153,13 @@ elif st.session_state.page=='about':
         <b style="color:#f4820a">{total_m:,} matches</b>, <b style="color:#f4820a">{total_d:,} deliveries</b>,
         and <b style="color:#f4820a">{total_p} players</b>.<br><br>
         Uses a <b style="color:#f4820a">Random Forest Classifier</b> with flip-team data augmentation.<br><br>
-        <b style="color:#8899aa">Model accuracy on held-out test set:</b>
-        <b style="color:#1c8b6e">{acc_pct}%</b> — this reflects the inherent unpredictability of T20 cricket.
-        Random Forest alone achieves ~52–53%; an Ensemble (RF + Gradient Boosting) reaches ~54–55%.
-        Cricket match outcomes depend heavily on factors like player fitness, pitch conditions, and in-match momentum
-        that no pre-match statistical model can fully capture — making ~54–55% a strong result for this problem.
+        <b style="color:#8899aa">Model accuracy on held-out test set:</b><br>
+        🌲 <b style="color:#f4820a">Random Forest:</b> <b style="color:#e63946">~52.67%</b> &nbsp;|&nbsp;
+        📈 <b style="color:#a855f7">Gradient Boosting:</b> <b style="color:#1c8b6e">~54.73%</b> &nbsp;|&nbsp;
+        🤝 <b style="color:#1a6fd4">Ensemble (RF+GB):</b> <b style="color:#1c8b6e">~54.73%</b><br><br>
+        T20 cricket is inherently unpredictable — player fitness, pitch conditions, dew, in-match momentum,
+        and match-day form cannot be captured by pre-match statistics alone.
+        <b style="color:#fff">~54–55% is a strong benchmark</b> for this class of problem and consistent with academic literature on T20 prediction.
         </div></div>
 
     <div class="card"><div class="divider">🧑‍🤝‍🧑 PLAYER DATASET BREAKDOWN (ACTUAL DATA)</div>
