@@ -486,7 +486,7 @@ if st.session_state.page=='predict':
             <!-- boundary arc -->
             <rect x="22" y="62" width="16" height="38" rx="2" fill="#8a6a1a" opacity="0.18"/>
             <!-- VS text -->
-            <text x="30" y="50" text-anchor="middle" font-family="Arial Black" font-size="30" font-weight="900" fill="#ffffff" opacity="1" letter-spacing="3">VS</text>
+            <text x="30" y="34" text-anchor="middle" font-family="Arial Black" font-size="30" font-weight="900" fill="#ffffff" opacity="1" letter-spacing="3">VS</text>
           </svg>
         </div>""",unsafe_allow_html=True)
     with c2:
