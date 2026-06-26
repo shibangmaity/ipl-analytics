@@ -484,7 +484,7 @@ if st.session_state.page=='predict':
               </filter>
             </defs>
             <!-- boundary arc -->
-            <rect x="22" y="64" width="16" height="40" rx="2" fill="#8a6a1a" opacity="0.18"/>
+            <rect x="22" y="50" width="16" height="40" rx="2" fill="#8a6a1a" opacity="0.18"/>
             <!-- VS text -->
             <text x="30" y="64" text-anchor="middle" font-family="Arial Black" font-size="30" font-weight="900" fill="#ffffff" opacity="1" letter-spacing="3">VS</text>
           </svg>
