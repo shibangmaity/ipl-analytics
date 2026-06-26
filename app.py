@@ -488,7 +488,7 @@ if st.session_state.page=='predict':
             <!-- pitch strip -->
             <rect x="22" y="62" width="16" height="36" rx="2" fill="#8a6a1a" opacity="0.18"/>
             <!-- VS text -->
-            <text x="30" y="22" text-anchor="middle" font-family="Arial Black" font-size="13" font-weight="900" fill="#ffffff" opacity="0.9" letter-spacing="2">VS</text>
+            <text x="30" y="50" text-anchor="middle" font-family="Arial Black" font-size="30" font-weight="900" fill="#ffffff" opacity="1" letter-spacing="3">VS</text>
           </svg>
         </div>""",unsafe_allow_html=True)
     with c2:
