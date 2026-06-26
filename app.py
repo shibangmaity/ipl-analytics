@@ -88,7 +88,7 @@ st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
 html,body,[class*="css"]{{font-family:'Inter',sans-serif;}}
-.stApp{{background-color:#02040a!important;background-image:url("{BG_SVG}")!important;background-size:cover!important;background-position:center top!important;background-repeat:no-repeat!important;background-attachment:fixed!important;min-height:100vh;}}
+.stApp{{background-color:#02040a!important;background-image:linear-gradient(rgba(0,0,0,0.20),rgba(0,0,0,0.20)),url("{BG_SVG}")!important;background-size:cover!important;background-position:center top!important;background-repeat:no-repeat!important;background-attachment:fixed!important;min-height:100vh;}}
 section[data-testid="stSidebar"]{{display:none!important;}}
 [data-testid="collapsedControl"]{{display:none!important;}}
 #MainMenu,footer,header{{visibility:hidden;}}
