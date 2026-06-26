@@ -1141,8 +1141,8 @@ elif st.session_state.page=='about':
         <b style="color:#f4820a">{total_m:,} matches</b>, <b style="color:#f4820a">{total_d:,} deliveries</b>,
         and <b style="color:#f4820a">{total_p} players</b>.<br><br>
         Uses a <b style="color:#f4820a">Random Forest Classifier</b> with flip-team data augmentation.<br><br>
-        <b style="color:#8899aa">Machine Learning Pipeline:</b><br>
-         Built using a <b style="color:#f4820a">Random Forest Classifier</b> with flip-team data augmentation, feature engineering, historical team performance, venue statistics, and toss information to generate pre-match predictions.<br><br>    
+        <b style="color:#8899aa">Machine Learning Pipeline:</b><br><br>
+         Built using a <b style="color:#f4820a">Random Forest Classifier</b> trained on historical IPL match data with engineered features including team performance, venue history, toss outcome, player statistics, and match conditions to generate pre-match win predictions.
         T20 cricket is inherently unpredictable — player fitness, pitch conditions, dew, in-match momentum,
         and match-day form cannot be captured by pre-match statistics alone.
         <b style="color:#fff">~54–55% is a strong benchmark</b> for this class of problem and consistent with academic literature on T20 prediction.
