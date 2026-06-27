@@ -188,17 +188,17 @@ def load_and_train():
     }), on='batter', how='left'
     )
 
-   deliveries = deliveries.merge(
-    players[['player_name','bowl_type','bowl_arm','bowl_style']].rename(columns={
+     deliveries = deliveries.merge(
+     players[['player_name','bowl_type','bowl_arm','bowl_style']].rename(columns={
         'player_name':'bowler','bowl_type':'bowler_type','bowl_arm':'bowler_arm'
     }), on='bowler', how='left'
-   )
+    )
 
-   deliveries['batter_hand'] = deliveries['batter_hand'].fillna('Unknown')
-   deliveries['bowler_type'] = deliveries['bowler_type'].fillna('Unknown')
-   deliveries['bowler_arm'] = deliveries['bowler_arm'].fillna('Unknown')
-   deliveries['bowl_style'] = deliveries['bowl_style'].fillna('Unknown')
-
+    deliveries['batter_hand'] = deliveries['batter_hand'].fillna('Unknown')
+    deliveries['bowler_type'] = deliveries['bowler_type'].fillna('Unknown')
+    deliveries['bowler_arm'] = deliveries['bowler_arm'].fillna('Unknown')
+    deliveries['bowl_style'] = deliveries['bowl_style'].fillna('Unknown')
+    
     sm={'2007/08':'2008','2009/10':'2010','2020/21':'2021'}
     tm={'Rising Pune Supergiant':'Rising Pune Supergiants',
         'Royal Challengers Bangalore':'Royal Challengers Bengaluru',
