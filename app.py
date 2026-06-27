@@ -182,7 +182,7 @@ def load_and_train():
     deliveries = deliveries.drop_duplicates(subset=['match_id','innings','over','ball','batter','bowler'])
 
     deliveries = deliveries.merge(
-        players[['player_name','bat_hand','bowl_type','bowl_arm','bowl_style']].rename(columns={
+        players[['player_name','bat_hand','bowl_type','bowl_arm']].rename(columns={
             'player_name':'batter','bat_hand':'batter_hand',
             'bowl_type':'batter_bowl_type','bowl_arm':'batter_bowl_arm'
         }), on='batter', how='left'
