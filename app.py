@@ -172,8 +172,8 @@ st.markdown(f"""
 # ── DATA LOAD & TRAIN ──
 @st.cache_resource
 def load_and_train():
-    MATCHES_URL    = "https://huggingface.co/datasets/shibangmaity/ipl-analytics-data/resolve/main/matches_2008_2026.csv"
-    DELIVERIES_URL = "https://huggingface.co/datasets/shibangmaity/ipl-analytics-data/resolve/main/deliveries_enriched_2008_2026.csv"
+    MATCHES_URL    = "https://huggingface.co/datasets/shibangmaity/ipl-analytics-data/resolve/main/matches_cricsheet.csv"
+    DELIVERIES_URL = "https://huggingface.co/datasets/shibangmaity/ipl-analytics-data/resolve/main/deliveries_cricsheet.csv"
     PLAYERS_URL    = "https://huggingface.co/datasets/shibangmaity/ipl-analytics-data/resolve/main/players_clean.csv"
     matches    = pd.read_csv(MATCHES_URL)
     deliveries = pd.read_csv(DELIVERIES_URL)
