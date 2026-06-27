@@ -26,7 +26,7 @@ An end-to-end **Data Analytics + Machine Learning** project analyzing **18 seaso
 ![Deep](Deep.png)
 
 ### 📊 Analytics Charts
-![Analytics](Analytics.png)
+![Analytics](Charts.png)
 
 ### ⚔️ Head to Head
 ![H2H](H2H.png)
