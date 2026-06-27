@@ -365,7 +365,7 @@ def load_and_train():
     dismissal_stats=dismissal_stats[~dismissal_stats['dismissal_kind'].isin(['retired hurt','obstructing the field','retired out'])]
 
     # Bowl style — wickets + wicket rate
-    bowl_style_merge=deliveries.merge(players[['player_name','bowl_style']],left_on='bowler',right_on='player_name',how='left')
+    bowl_style_merge=deliveries.copy()
     wk_style=bowl_style_merge[bowl_style_merge['is_wicket']==True]
     bsw=wk_style.groupby('bowl_style')['is_wicket'].count().reset_index(); bsw.columns=['bowl_style','wickets']
     bsb=bowl_style_merge.groupby('bowl_style').size().reset_index(); bsb.columns=['bowl_style','balls']
