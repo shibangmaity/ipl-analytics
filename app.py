@@ -186,13 +186,13 @@ def load_and_train():
         'player_name':'batter','bat_hand':'batter_hand',
         'bowl_type':'batter_bowl_type','bowl_arm':'batter_bowl_arm'
     }), on='batter', how='left'
- )
+    )
 
    deliveries = deliveries.merge(
     players[['player_name','bowl_type','bowl_arm','bowl_style']].rename(columns={
         'player_name':'bowler','bowl_type':'bowler_type','bowl_arm':'bowler_arm'
     }), on='bowler', how='left'
- )
+   )
 
 deliveries['batter_hand'] = deliveries['batter_hand'].fillna('Unknown')
 deliveries['bowler_type'] = deliveries['bowler_type'].fillna('Unknown')
