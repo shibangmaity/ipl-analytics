@@ -178,12 +178,14 @@ def load_and_train():
     matches    = pd.read_csv(MATCHES_URL)
     deliveries = pd.read_csv(DELIVERIES_URL)
     players    = pd.read_csv(PLAYERS_URL)
+    matches = matches.drop_duplicates(subset=['id'])
+    deliveries = deliveries.drop_duplicates(subset=['match_id','innings','over','ball','batter','bowler'])
 
     sm={'2007/08':'2008','2009/10':'2010','2020/21':'2021'}
     tm={'Rising Pune Supergiant':'Rising Pune Supergiants',
         'Royal Challengers Bangalore':'Royal Challengers Bengaluru',
         'Delhi Daredevils':'Delhi Capitals','Kings XI Punjab':'Punjab Kings'}
-    matches['season']=matches['season'].replace(sm).astype(str)
+    matches['season']=matches['season'].astype(str).replace(sm)
     for col in ['team1','team2','toss_winner','winner']: matches[col]=matches[col].replace(tm)
     for col in ['batting_team','bowling_team']: deliveries[col]=deliveries[col].replace(tm)
     matches=matches.dropna(subset=['winner']).sort_values('date').reset_index(drop=True)
