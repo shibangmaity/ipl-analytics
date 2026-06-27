@@ -182,23 +182,23 @@ def load_and_train():
     deliveries = deliveries.drop_duplicates(subset=['match_id','innings','over','ball','batter','bowler'])
 
     deliveries = deliveries.merge(
-    players[['player_name','bat_hand','bowl_type','bowl_arm','bowl_style']].rename(columns={
-        'player_name':'batter','bat_hand':'batter_hand',
-        'bowl_type':'batter_bowl_type','bowl_arm':'batter_bowl_arm'
-    }), on='batter', how='left'
+        players[['player_name','bat_hand','bowl_type','bowl_arm','bowl_style']].rename(columns={
+            'player_name':'batter','bat_hand':'batter_hand',
+            'bowl_type':'batter_bowl_type','bowl_arm':'batter_bowl_arm'
+        }), on='batter', how='left'
     )
 
-     deliveries = deliveries.merge(
-     players[['player_name','bowl_type','bowl_arm','bowl_style']].rename(columns={
-        'player_name':'bowler','bowl_type':'bowler_type','bowl_arm':'bowler_arm'
-    }), on='bowler', how='left'
+    deliveries = deliveries.merge(
+        players[['player_name','bowl_type','bowl_arm','bowl_style']].rename(columns={
+            'player_name':'bowler','bowl_type':'bowler_type','bowl_arm':'bowler_arm'
+        }), on='bowler', how='left'
     )
 
     deliveries['batter_hand'] = deliveries['batter_hand'].fillna('Unknown')
     deliveries['bowler_type'] = deliveries['bowler_type'].fillna('Unknown')
     deliveries['bowler_arm'] = deliveries['bowler_arm'].fillna('Unknown')
     deliveries['bowl_style'] = deliveries['bowl_style'].fillna('Unknown')
-    
+
     sm={'2007/08':'2008','2009/10':'2010','2020/21':'2021'}
     tm={'Rising Pune Supergiant':'Rising Pune Supergiants',
         'Royal Challengers Bangalore':'Royal Challengers Bengaluru',
@@ -731,7 +731,7 @@ elif st.session_state.page=='style':
             <div class="insight-body">
             • <b style="color:#e63946">Pace bowling</b> takes ~9,700 wickets total with a <b style="color:#fff">5.21% wicket rate</b> — faster throughput and more breakthroughs.<br>
             • <b style="color:#1c8b6e">Spin bowling</b> takes ~4,400 wickets but with <b style="color:#fff">lower economy (7.40 vs 7.87)</b> — spinners contain runs and work best in middle overs.<br>
-            • <b style="color:#fff">Key takeaway:</b> Use pace for wickets, use spin to choke scoring. 
+            • <b style="color:#fff">Key takeaway:</b> Use pace for wickets, use spin to choke scoring.
             Both types are needed for a balanced T20 attack.
             </div></div>""",unsafe_allow_html=True)
         c1,c2=st.columns(2)
