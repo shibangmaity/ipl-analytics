@@ -212,7 +212,7 @@ streamlit run app.py
 |----------|------|
 | 🌐 Live App | [shibang-ipl-analytics.streamlit.app](https://shibang-ipl-analytics.streamlit.app) |
 | 📦 Hugging Face *(all datasets)* | [shibangmaity/ipl-analytics-data](https://huggingface.co/datasets/shibangmaity/ipl-analytics-data) |
-| 📊 Kaggle | [IPL Complete Dataset 2008–2020](https://www.kaggle.com/datasets/patrickb1912/ipl-complete-dataset-20082020) |
+| 📊 Kaggle | [IPL Complete Dataset 2008–2026](https://www.kaggle.com/datasets/maratheabhishek/ipl-dataset-2008-to-2025) |
 | 🏏 Cricsheet | [cricsheet.org](https://cricsheet.org) |
 
 ---
