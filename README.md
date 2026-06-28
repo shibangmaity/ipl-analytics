@@ -4,7 +4,7 @@
 >
 > 🚀 **[Live Demo → shibang-ipl-analytics.streamlit.app](https://shibang-ipl-analytics.streamlit.app)**
 
-An end-to-end **Data Analytics + Machine Learning** project analyzing **18 seasons of IPL** (2008–2026), covering **1,100+ matches** and **288,000+ ball-by-ball deliveries**. Built a Random Forest classifier to predict match outcomes with a full interactive analytics dashboard — publicly deployed on Streamlit Cloud.
+An end-to-end **Data Analytics + Machine Learning** project analyzing **18 seasons of IPL** (2008–2026), covering **1,100+ matches** and **288,000+ ball-by-ball deliveries**. Built a Random Forest + Gradient Boosting Ensemble to predict match outcomes with a full interactive analytics dashboard — publicly deployed on Streamlit Cloud.
 
 ---
 
@@ -53,38 +53,51 @@ An end-to-end **Data Analytics + Machine Learning** project analyzing **18 seaso
 
 ## 🧠 ML Model
 
-- **Algorithm:** Random Forest Classifier (1,000 estimators)
+- **Algorithm:** Random Forest + Gradient Boosting → **Ensemble (RF + GB)**
 - **Augmentation:** Flip-team data augmentation to double training size and remove team-order bias
-- **Train/Test split:** 75% / 25% (time-based — no data leakage)
+- **Train/Test split:** 80% / 20% (time-based — no data leakage)
+- **Features:** 25 engineered features (all pre-match, no leakage)
 - **Accuracy:** ~54–55% — strong benchmark for pre-match T20 prediction
+- **Explainability:** SHAP summary plots for feature importance
 - **Deployed:** Publicly on Streamlit Cloud ✔
 
 **Features used:**
-- Team win rate differential (strongest predictor)
-- Rolling form — last 15 matches & last 5 matches
+- Team win rate differential (strongest predictor — confirmed by SHAP)
+- Rolling form — last 5, 10 & 15 matches
 - Head-to-head historical win rate (rolling, no leakage)
+- Within-season win rate
 - Venue-specific win rate differential
 - Toss outcome & decision
-- Season number & match stage within season
+- Player style features — left-hand batter ratio & pace bowling ratio
+- Season number
 
 **Feature Engineering:**
 ```
-• Rolling team form       →  Last 5 and last 15 match win rates
+• Rolling team form       →  Last 5, 10, 15 match win rates (3 windows)
 • Venue performance       →  Team-specific win rate at each ground
 • Historical H2H          →  Head-to-head win rate (pre-match only)
+• Season win rate         →  Current season form (no leakage)
 • Toss influence          →  Toss winner + bat/field decision encoded
 • Team strength metrics   →  Overall win rate differential between teams
-• Season stage            →  Match position within season (early/playoff)
+• Player style            →  Left-hand batter ratio & pace bowling ratio
 ```
 
-> 💡 Even professional betting models achieve only 55–58% on T20 cricket. The model's key value is in **feature importance insights** and **trend discovery**, not just raw accuracy.
+**Model Comparison:**
+```
+Logistic Regression   →  Excluded (linear model, below 50% accuracy)
+Random Forest         →  ~53–54%
+Gradient Boosting     →  ~54–55%
+Ensemble (RF + GB)    →  ~54–55% ← Best
+```
+
+> 💡 Even professional betting models achieve only 55–58% on T20 cricket. The model's key value is in **feature importance insights** (SHAP) and **trend discovery**, not just raw accuracy.
 
 ---
 
 ## 📊 Key Findings
 
 ```
-✅ Win rate differential      →  Strongest predictor of match outcome
+✅ Win rate differential      →  Strongest predictor of match outcome (SHAP #1)
 ✅ Toss outcome               →  Near-zero impact (~50.8% win rate)
 ✅ Field-first preference     →  Grew 70%+ post-2013; now dominant
 ✅ Average match scores       →  Rose 27%+ from 2009 to 2026
@@ -92,7 +105,7 @@ An end-to-end **Data Analytics + Machine Learning** project analyzing **18 seaso
 ✅ Left arm Pace vs RHB       →  Highest wicket rate (5.41%) — hardest matchup
 ✅ Death over run rate        →  ~9.0 vs powerplay ~7.3 — most explosive phase
 ✅ Pace takes 2.2× wickets   →  But spin has lower economy in middle overs
-✅ RF+Augmentation accuracy  →  ~54–55% — strong T20 ML benchmark
+✅ Ensemble accuracy          →  ~54–55% — strong T20 ML benchmark
 ✔  Publicly deployed          →  Live on Streamlit Cloud
 ```
 
@@ -124,9 +137,41 @@ One of the app's unique features is a deep **batter vs bowler matchup matrix**:
 
 ---
 
+## 🗃️ Data Pipeline
+
+Raw data was sourced from **Cricsheet** (JSON) and **Kaggle**, then parsed and cleaned into 3 CSVs:
+
+```
+Cricsheet JSON (ipl_male_json.zip)     Kaggle
+        ↓                                 ↓
+  Parse all match JSONs            players_clean.csv
+        ↓
+  matches_cricsheet.csv
+  deliveries_cricsheet.csv
+        ↓
+  Fix season labels (2020/2021 overlap)
+  Standardize team names
+        ↓
+  Upload all 3 CSVs to Hugging Face
+        ↓
+  app.py loads from Hugging Face at runtime
+```
+
+**Datasets:**
+
+| File | Description | Rows |
+|------|-------------|------|
+| `matches_cricsheet.csv` | Match-level data (2008–2026) | 1,100+ |
+| `deliveries_cricsheet.csv` | Ball-by-ball data | 288,000+ |
+| `players_clean.csv` | Player profiles (bat hand, bowl style, bowl arm) | 799 |
+
+> ⚠️ All 3 datasets hosted on **Hugging Face** (sourced from Kaggle & Cricsheet) due to GitHub's file size limit. Loaded automatically on first run — no manual download needed.
+
+---
+
 ## 🛠️ Tech Stack
 
-`Python 3.11` `Pandas` `NumPy` `Scikit-learn` `Streamlit` `Matplotlib` `HuggingFace Datasets`
+`Python 3.11` `Pandas` `NumPy` `Scikit-learn` `Streamlit` `Matplotlib` `Seaborn` `SHAP` `SQLite` `HuggingFace Datasets`
 
 ---
 
@@ -135,17 +180,11 @@ One of the app's unique features is a deep **batter vs bowler matchup matrix**:
 ```
 ipl-analytics/
 │
-├── app.py                      # Streamlit web app (all pages)
-├── requirements.txt            # Python dependencies
+├── app.py                          # Streamlit web app (all 8 pages)
+├── IPL_Analytics_2008_2026.ipynb   # Full EDA + ML notebook (17 sections)
+├── requirements.txt                # Python dependencies
 └── README.md
 ```
-
-**Datasets used:**
-- `matches_cricsheet.csv` — Match-level data (2008–2026)
-- `deliveries_cricsheet.csv` — Ball-by-ball data (288,000+ rows)
-- `players_clean.csv` — Player profiles with batting hand, bowling style & arm
-
-> ⚠️ All 3 datasets are hosted on **Hugging Face** (sourced from Kaggle & Cricsheet) due to GitHub's file size limit. They are loaded automatically on first run — no manual download needed.
 
 ---
 
@@ -163,6 +202,8 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
+> Datasets are loaded automatically from Hugging Face on first run — no manual download needed.
+
 ---
 
 ## 🔗 Links
@@ -171,7 +212,7 @@ streamlit run app.py
 |----------|------|
 | 🌐 Live App | [shibang-ipl-analytics.streamlit.app](https://shibang-ipl-analytics.streamlit.app) |
 | 📦 Hugging Face *(all datasets)* | [shibangmaity/ipl-analytics-data](https://huggingface.co/datasets/shibangmaity/ipl-analytics-data) |
-| 📊 Kaggle | [IPL Complete Dataset 2008–2026](https://www.kaggle.com/datasets/maratheabhishek/ipl-dataset-2008-to-2025). |
+| 📊 Kaggle | [IPL Complete Dataset 2008–2020](https://www.kaggle.com/datasets/patrickb1912/ipl-complete-dataset-20082020) |
 | 🏏 Cricsheet | [cricsheet.org](https://cricsheet.org) |
 
 ---
@@ -186,4 +227,4 @@ streamlit run app.py
 
 ---
 
-*Built with ❤️ and cricket data · IPL 2008–2026 · Data: Kaggle + Cricsheet · Random Forest + Player Style Analytics · KIIT University 2026*
+*Built with ❤️ and cricket data · IPL 2008–2026 · Data: Kaggle + Cricsheet · Random Forest + Gradient Boosting + SHAP · KIIT University 2026*
